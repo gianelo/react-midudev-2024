@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function App() {
+const FollowMouse = () => {
   const [enabled, setEnabled] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -8,8 +8,6 @@ function App() {
     // console.log("Efecto", { enabled });
     const handleMove = (event: PointerEvent) => {
       const { clientX, clientY } = event;
-
-      console.log({ clientX, clientY });
 
       setPosition({
         x: clientX,
@@ -25,8 +23,17 @@ function App() {
       window.removeEventListener("pointermove", handleMove);
     };
   }, [enabled]);
+
+  useEffect(() => {
+    document.body.classList.toggle("no-cursor", enabled);
+
+    return () => {
+      document.body.classList.remove("no-cursor");
+    };
+  }, [enabled]);
+
   return (
-    <main>
+    <>
       <div
         style={{
           position: "absolute",
@@ -45,6 +52,14 @@ function App() {
       <button onClick={() => setEnabled(!enabled)}>
         {enabled ? "Desactivar" : "Activar"} seguir puntero
       </button>
+    </>
+  );
+};
+
+function App() {
+  return (
+    <main>
+      <FollowMouse />
     </main>
   );
 }

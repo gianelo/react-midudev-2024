@@ -33,6 +33,10 @@ body {
   min-height: 100vh;
 }
 
+body.no-cursor {
+  cursor: none;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
